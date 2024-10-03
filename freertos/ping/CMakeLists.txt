@@ -1,35 +1,11 @@
-cmake_minimum_required(VERSION 3.13)
-
-# Initialize pico_sdk from installed location
-# (note this can come from environment, CMake cache etc)
-set(PICO_SDK_PATH "/Users/jiawei/.pico-sdk/sdk/2.0.0")
-
-set(PICO_BOARD pico_w)
-
-# Pull in Raspberry Pi Pico SDK (must be before project)
-include(pico_sdk_import.cmake)
-
-# Set the path to FreeRTOS kernel
-set(FREERTOS_KERNEL_PATH "/Users/jiawei/Documents/FreeRTOS-KernelV11.1.0")
-
-# Pull in FreeRTOS
-include(${CMAKE_CURRENT_LIST_DIR}/../FreeRTOS_Kernel_import.cmake)
-
-project(picow_freertos_ping C CXX ASM)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
-
-# Initialize the Raspberry Pi Pico SDK
-pico_sdk_init()
-
 if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
     add_executable(picow_freertos_ping_nosys
             picow_freertos_ping.c
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c
             )
     target_compile_definitions(picow_freertos_ping_nosys PRIVATE
-            WIFI_SSID="COSMOC"
-            WIFI_PASSWORD="jiaweiii"
+            WIFI_SSID=\"${WIFI_SSID}\"
+            WIFI_PASSWORD=\"${WIFI_PASSWORD}\"
             )
     target_include_directories(picow_freertos_ping_nosys PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}
@@ -38,7 +14,6 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping
             )
     target_link_libraries(picow_freertos_ping_nosys
-            hardware_adc
             pico_cyw43_arch_lwip_threadsafe_background
             pico_stdlib
             pico_lwip_iperf
@@ -51,8 +26,8 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c
             )
     target_compile_definitions(picow_freertos_ping_sys PRIVATE
-            WIFI_SSID="COSMOC"
-            WIFI_PASSWORD="jiaweiii"
+            WIFI_SSID=\"${WIFI_SSID}\"
+            WIFI_PASSWORD=\"${WIFI_PASSWORD}\"
             NO_SYS=0            # don't want NO_SYS (generally this would be in your lwipopts.h)
             LWIP_SOCKET=1       # we need the socket API (generally this would be in your lwipopts.h)
             PING_USE_SOCKETS=1
@@ -64,7 +39,6 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping
             )
     target_link_libraries(picow_freertos_ping_sys
-            hardware_adc
             pico_cyw43_arch_lwip_sys_freertos
             pico_stdlib
             pico_lwip_iperf
@@ -72,6 +46,3 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             )
     pico_add_extra_outputs(picow_freertos_ping_sys)
 endif()
-
-pico_enable_stdio_usb(picow_freertos_ping_sys 1)
-pico_enable_stdio_uart(picow_freertos_ping_sys 0)
