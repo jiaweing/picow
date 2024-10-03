@@ -15,7 +15,7 @@ set(FREERTOS_KERNEL_PATH "/Users/jiawei/Documents/FreeRTOS-KernelV11.1.0")
 # Pull in FreeRTOS
 include(${CMAKE_CURRENT_LIST_DIR}/../FreeRTOS_Kernel_import.cmake)
 
-project(picow_freertos_ping C CXX ASM)
+project(picow_freertos_temperature C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -23,17 +23,17 @@ set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
 if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
-    add_executable(picow_freertos_ping_nosys
-            picow_freertos_ping.c
+    add_executable(picow_freertos_temperature_nosys
+            picow_freertos_temperature.c
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c
             )
-    target_compile_definitions(picow_freertos_ping_nosys PRIVATE
+    target_compile_definitions(picow_freertos_temperature_nosys PRIVATE
             WIFI_SSID="COSMOS"
             WIFI_PASSWORD="jiaweiii"
             LWIP_RAW=1
             LWIP_ICMP=1
             )
-    target_include_directories(picow_freertos_ping_nosys PRIVATE
+    target_include_directories(picow_freertos_temperature_nosys PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}
             ${CMAKE_CURRENT_LIST_DIR}/.. # for our common FreeRTOSConfig
             ${CMAKE_CURRENT_LIST_DIR}/../.. # for our common lwipopts
@@ -41,7 +41,7 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             ${PICO_SDK_PATH}/src/rp2_common/pico_lwip/include
             ${PICO_SDK_PATH}/lib/lwip/src/include # Add lwIP core include directory
             )
-    target_link_libraries(picow_freertos_ping_nosys
+    target_link_libraries(picow_freertos_temperature_nosys
             hardware_adc
             pico_cyw43_arch_lwip_threadsafe_background
             pico_stdlib
@@ -49,13 +49,13 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             pico_lwip # Explicitly link against lwIP
             FreeRTOS-Kernel-Heap4 # FreeRTOS kernel and dynamic heap
             )
-    pico_add_extra_outputs(picow_freertos_ping_nosys)
+    pico_add_extra_outputs(picow_freertos_temperature_nosys)
 
-    add_executable(picow_freertos_ping_sys
-            picow_freertos_ping.c
+    add_executable(picow_freertos_temperature_sys
+            picow_freertos_temperature.c
             ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c
             )
-    target_compile_definitions(picow_freertos_ping_sys PRIVATE
+    target_compile_definitions(picow_freertos_temperature_sys PRIVATE
             WIFI_SSID="COSMOS"
             WIFI_PASSWORD="jiaweiii"
             NO_SYS=0            # don't want NO_SYS (generally this would be in your lwipopts.h)
@@ -64,7 +64,7 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             LWIP_RAW=1
             LWIP_ICMP=1
             )
-    target_include_directories(picow_freertos_ping_sys PRIVATE
+    target_include_directories(picow_freertos_temperature_sys PRIVATE
             ${CMAKE_CURRENT_LIST_DIR}
             ${CMAKE_CURRENT_LIST_DIR}/.. # for our common FreeRTOSConfig
             ${CMAKE_CURRENT_LIST_DIR}/../.. # for our common lwipopts
@@ -72,7 +72,7 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             ${PICO_SDK_PATH}/src/rp2_common/pico_lwip/include
             ${PICO_SDK_PATH}/lib/lwip/src/include # Add lwIP core include directory
             )
-    target_link_libraries(picow_freertos_ping_sys
+    target_link_libraries(picow_freertos_temperature_sys
             hardware_adc
             pico_cyw43_arch_lwip_sys_freertos
             pico_stdlib
@@ -80,8 +80,8 @@ if (EXISTS ${PICO_LWIP_CONTRIB_PATH}/apps/ping/ping.c)
             pico_lwip # Explicitly link against lwIP
             FreeRTOS-Kernel-Heap4 # FreeRTOS kernel and dynamic heap
             )
-    pico_add_extra_outputs(picow_freertos_ping_sys)
+    pico_add_extra_outputs(picow_freertos_temperature_sys)
 endif()
 
-pico_enable_stdio_usb(picow_freertos_ping_sys 1)
-pico_enable_stdio_uart(picow_freertos_ping_sys 0)
+pico_enable_stdio_usb(picow_freertos_temperature_sys 1)
+pico_enable_stdio_uart(picow_freertos_temperature_sys 0)
