@@ -101,3 +101,6 @@ add_subdirectory(usb)
 add_subdirectory(watchdog)
 add_subdirectory(sha)
 add_subdirectory(freertos)
+
+# Add our new PID controller project
+add_subdirectory(pid_controller_project)

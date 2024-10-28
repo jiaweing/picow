@@ -10,3 +10,5 @@ pico_add_extra_outputs(hello_48MHz)
 
 # add url via pico_set_program_url
 example_auto_set_url(hello_48MHz)
+
+pico_enable_stdio_usb(hello_48MHz 1)

@@ -3,8 +3,8 @@
 #include "hardware/timer.h"
 
 #define ENCODER_PIN 2  // GPIO pin for the encoder
-#define WHEEL_CIRCUMFERENCE 20.0f  // Wheel circumference in cm (adjust as needed)
-#define PULSES_PER_REVOLUTION 20  // Number of pulses per wheel revolution (adjust based on your encoder)
+#define WHEEL_CIRCUMFERENCE 20.0f  // Wheel circumference in cm
+#define PULSES_PER_REVOLUTION 20  // Number of pulses per wheel revolution
 
 volatile uint32_t pulse_count = 0;
 volatile uint64_t last_pulse_time = 0;
