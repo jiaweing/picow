@@ -1,3 +1,4 @@
+/Users/jiawei/Documents/SIT/picow/project/build/CMakeFiles/freertos.dir
 /Users/jiawei/Documents/SIT/picow/project/build/CMakeFiles/wheel_encoder.dir
 /Users/jiawei/Documents/SIT/picow/project/build/CMakeFiles/main_wheel_encoder.dir
 /Users/jiawei/Documents/SIT/picow/project/build/CMakeFiles/ultrasonic_sensor.dir
